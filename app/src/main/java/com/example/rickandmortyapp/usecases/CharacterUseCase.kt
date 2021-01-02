@@ -1,5 +1,6 @@
 package com.example.rickandmortyapp.usecases
 
+import androidx.paging.PagingSource
 import com.example.rickandmortyapp.database.CharacterEntity
 import com.example.rickandmortyapp.models.CharacterResponseModel
 import com.example.rickandmortyapp.models.EpisodeResponseModel
@@ -10,6 +11,10 @@ import javax.inject.Singleton
 
 @Singleton
 class CharacterUseCase @Inject constructor(private val characterRepository: CharacterRepository, private val episodeRepository: EpisodeRepository) {
+
+    fun getCharacters(): PagingSource<Int, CharacterEntity> {
+        return characterRepository.getCharacters()
+    }
 
     suspend fun getCharacterInfo(page: Int?): CharacterResponseModel {
         return characterRepository.getCharacterList(page)
