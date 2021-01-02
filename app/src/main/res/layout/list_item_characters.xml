@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="characterEntity"
+            type="com.example.rickandmortyapp.database.CharacterEntity" />
+
+        <variable
+            name="selectionListener"
+            type="com.example.rickandmortyapp.listeners.CharacterSelectionListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> selectionListener.onCharacterSelected(characterEntity)}">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:adjustViewBounds="true"
+            android:id="@+id/characterImage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="fitXY"
+            app:imageUrl="@{characterEntity.characterImage}"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundRectImageView"
+            tools:srcCompat="@sample/characters.json/characters/image" />
+
+        <TextView
+            android:id="@+id/characterName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/coda_extrabold"
+            android:text="@{characterEntity.characterName}"
+            app:fontFamily="@font/coda_extrabold"
+            app:layout_constraintStart_toStartOf="@+id/characterImage"
+            app:layout_constraintTop_toBottomOf="@+id/characterImage"
+            tools:text="@sample/characters.json/characters/name" />
+
+        <TextView
+            android:id="@+id/characterSpecies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/coda"
+            android:text="@{characterEntity.characterSpecies}"
+            app:fontFamily="@font/coda"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/characterName"
+            app:layout_constraintTop_toBottomOf="@+id/characterName"
+            tools:text="@sample/characters.json/characters/species" />
+
+        <ImageView
+            android:adjustViewBounds="true"
+            android:id="@+id/statusImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/characterSpecies"
+            app:layout_constraintEnd_toEndOf="@+id/characterImage"
+            app:layout_constraintTop_toTopOf="@+id/characterName"
+            app:statusIcon="@{characterEntity.characterStatus}"
+            tools:srcCompat="@drawable/ic_alive" />
+
+        <ToggleButton
+            android:id="@+id/bookmarkToggle"
+            style="@style/FavoriteButtonStyle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:checked="@{characterEntity.isFavorite()}"
+            app:layout_constraintEnd_toEndOf="@+id/characterImage"
+            app:layout_constraintTop_toTopOf="@+id/characterImage" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

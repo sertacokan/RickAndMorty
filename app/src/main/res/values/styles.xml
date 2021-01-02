@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="FavoriteButtonStyle" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/favorite_selector</item>
+        <item name="android:textOff">""</item>
+        <item name="android:textOn">""</item>
+        <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
+    </style>
+
+    <style name="RoundRectImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="ExtraBoldTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/coda_extrabold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/coda_extrabold</item>
+    </style>
+
+    <style name="RegularTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/coda</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/coda</item>
+    </style>
+</resources>

@@ -1,0 +1,16 @@
+{
+  "characters": [
+    {
+      "name": "Rick Sanchez",
+      "status": "Alive",
+      "species": "Human",
+      "image": "@sample/images"
+    },
+    {
+      "name": "Morty Smith",
+      "status": "Alive",
+      "species": "Human",
+      "image": "@sample/images"
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.rickandmortyapp.viewmodels.CharacterDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.CharacterDetailFragment">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            app:imageUrl="@{viewModel.imageUrl}"
+            android:id="@+id/shapeableImageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            app:layout_constraintDimensionRatio="w,1:2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundRectImageView"
+            tools:srcCompat="@sample/images[1]" />
+
+        <TextView
+            android:text="@{viewModel.name}"
+            android:id="@+id/textView"
+            style="@style/ExtraBoldTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
+            app:layout_constraintTop_toBottomOf="@+id/shapeableImageView"
+            tools:text="Morty Smith" />
+
+        <TextView
+            android:text="@{viewModel.species}"
+            android:id="@+id/textView2"
+            style="@style/RegularTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:text="Human" />
+
+        <ToggleButton
+            android:checked="@{viewModel.isFavorite}"
+            android:id="@+id/toggleButton"
+            style="@style/FavoriteButtonStyle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"
+            app:layout_constraintTop_toTopOf="@+id/shapeableImageView" />
+
+
+        <com.example.rickandmortyapp.custom.InfoView
+            app:infoText="@{viewModel.gender}"
+            android:id="@+id/infoView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:infoTitle="@string/gender_info_title"
+            app:layout_constraintBottom_toBottomOf="@+id/infoView4"
+            app:layout_constraintEnd_toStartOf="@+id/infoView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/infoView4"
+            app:layout_constraintTop_toTopOf="@+id/infoView4"
+            tools:infoText="Male" />
+
+        <com.example.rickandmortyapp.custom.InfoView
+            app:infoText="@{viewModel.status}"
+            android:id="@+id/infoView4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            app:infoTitle="@string/status_info_title"
+            app:layout_constraintBottom_toTopOf="@+id/textView3"
+            app:layout_constraintEnd_toStartOf="@+id/infoView2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            tools:infoText="Alive" />
+
+        <com.example.rickandmortyapp.custom.InfoView
+            app:infoText="@{viewModel.episodeNumber}"
+            android:id="@+id/infoView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/infoView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/infoView2"
+            app:layout_constraintTop_toTopOf="@+id/infoView2"
+            tools:infoText="130"
+            app:infoTitle="@string/number_of_episode_info_title" />
+
+        <com.example.rickandmortyapp.custom.InfoView
+            app:infoText="@{viewModel.lastLocation}"
+            android:id="@+id/infoView5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/infoView3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/infoView7"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            tools:infoText="Earth"
+            app:infoTitle="@string/last_location_info_title" />
+
+        <com.example.rickandmortyapp.custom.InfoView
+            app:infoText="@{viewModel.originLocation}"
+            android:id="@+id/infoView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/infoView5"
+            app:layout_constraintEnd_toEndOf="@+id/infoView6"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/infoView5"
+            app:layout_constraintTop_toTopOf="@+id/infoView5"
+            app:layout_constraintVertical_bias="0.0"
+            tools:infoText="Earth"
+            app:infoTitle="@string/origin_location_info_title" />
+
+        <com.example.rickandmortyapp.custom.InfoView
+            app:infoText="@{viewModel.lastEpisodeName}"
+            android:id="@+id/infoView6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/infoView7"
+            app:layout_constraintEnd_toEndOf="@+id/infoView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/infoView7"
+            app:layout_constraintTop_toTopOf="@+id/infoView7"
+            tools:infoText="The Ricklantis Mixup"
+            app:infoTitle="@string/last_episode_name_info_title" />
+
+        <com.example.rickandmortyapp.custom.InfoView
+            app:infoText="@{viewModel.lastEpisodeAirDate}"
+            android:id="@+id/infoView7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintEnd_toStartOf="@+id/infoView6"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/infoView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            tools:infoText="September 10, 2017"
+            app:infoTitle="@string/last_epside_air_date_info_title" />
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/RegularTextViewStyle"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/last_episode_title"
+            app:layout_constraintBottom_toTopOf="@+id/infoView7"
+            app:layout_constraintStart_toStartOf="@+id/infoView4"
+            app:layout_constraintTop_toBottomOf="@+id/infoView4" />
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/RegularTextViewStyle"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/locations_title"
+            app:layout_constraintBottom_toTopOf="@+id/infoView5"
+            app:layout_constraintStart_toStartOf="@+id/infoView7"
+            app:layout_constraintTop_toBottomOf="@+id/infoView7" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
