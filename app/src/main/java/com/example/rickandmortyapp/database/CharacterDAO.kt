@@ -2,7 +2,6 @@ package com.example.rickandmortyapp.database
 
 import androidx.paging.PagingSource
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CharacterDAO {
@@ -13,8 +12,8 @@ interface CharacterDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addCharacters(characters: List<CharacterEntity>)
 
-    @Query("SELECT * FROM CharacterTable WHERE Name= :filterText OR Status= :filterText")
-    fun filterCharacterByNameOrStatus(filterText: String): Flow<List<CharacterEntity>>
+    @Query("SELECT * FROM CharacterTable WHERE Status= :status")
+    fun filterCharacterByStatus(status: String): PagingSource<Int, CharacterEntity>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateCharacterFavoriteState(characterEntity: CharacterEntity)

@@ -28,4 +28,9 @@
     <!-- InfoView -->
     <string name="info_view_default_title">Info Title</string>
     <string name="info_view_default_text">Info Text</string>
+
+    <!-- Status Filter -->
+    <string name="dead_status_filter_text">Dead</string>
+    <string name="alive_status_filter_text">Alive</string>
+    <string name="unknown_status_filter">unknown</string>
 </resources>

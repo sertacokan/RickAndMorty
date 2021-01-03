@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +17,6 @@ import com.example.rickandmortyapp.databinding.FragmentCharacterListBinding
 import com.example.rickandmortyapp.listeners.CharacterSelectionListener
 import com.example.rickandmortyapp.viewmodels.CharacterListViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
@@ -81,7 +79,14 @@ class CharacterListFragment : Fragment(), CharacterSelectionListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        binding.characterList.layoutManager = when (item.itemId) {
+        setupLayoutManager(item)
+        activity?.invalidateOptionsMenu()
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setupLayoutManager(item: MenuItem) {
+
+        val layoutManager = when (item.itemId) {
             R.id.linear_list_menu_item -> {
                 linearLayoutManager
             }
@@ -90,8 +95,9 @@ class CharacterListFragment : Fragment(), CharacterSelectionListener {
             }
         }
 
-        activity?.invalidateOptionsMenu()
-        return super.onOptionsItemSelected(item)
+        if (binding.characterList.layoutManager != layoutManager) {
+            binding.characterList.layoutManager = layoutManager
+        }
     }
 
     //region Character Change Listener Methods

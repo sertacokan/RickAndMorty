@@ -16,6 +16,10 @@ class CharacterUseCase @Inject constructor(private val characterRepository: Char
         return characterRepository.getCharacters()
     }
 
+    fun getFilteredCharacters(status: String): PagingSource<Int, CharacterEntity> {
+        return characterRepository.filterCharacterByStatus(status)
+    }
+
     suspend fun getCharacterInfo(page: Int?): CharacterResponseModel {
         return characterRepository.getCharacterList(page)
     }
