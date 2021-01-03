@@ -5,6 +5,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-parcelize'
+    id "com.google.protobuf" version "0.8.12"
+
 }
 
 android {
@@ -102,8 +104,31 @@ dependencies {
     //Logging Interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
+    //Protobuf Data Store
+    implementation  "androidx.datastore:datastore-core:1.0.0-alpha01"
+    implementation  "com.google.protobuf:protobuf-javalite:3.10.0"
+
     //Test
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.10.0"
+    }
+
+    // Generates the java Protobuf-lite code for the Protobufs in this project. See
+    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+    // for more information.
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
 }
