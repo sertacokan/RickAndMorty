@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ import com.example.rickandmortyapp.listeners.CharacterSelectionListener
 import com.example.rickandmortyapp.viewmodels.CharacterListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @ExperimentalPagingApi
@@ -54,7 +56,7 @@ class CharacterListFragment : Fragment(), CharacterSelectionListener {
             adapter = CharacterPagingAdapter(this@CharacterListFragment)
             addItemDecoration(dividerItemDecoration)
         }
-
+        
         getCharacters()
     }
 
@@ -106,7 +108,7 @@ class CharacterListFragment : Fragment(), CharacterSelectionListener {
 
     private fun getCharacters() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.characters.collect { pagingData -> (binding.characterList.adapter as? CharacterPagingAdapter)?.submitData(pagingData) }
+            viewModel.characters.collectLatest { pagingData -> (binding.characterList.adapter as? CharacterPagingAdapter)?.submitData(pagingData) }
         }
     }
 }

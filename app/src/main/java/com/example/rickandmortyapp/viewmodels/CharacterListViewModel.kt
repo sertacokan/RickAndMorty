@@ -27,9 +27,7 @@ class CharacterListViewModel
         Pager(
             config = PagingConfig(pageSize = 10),
             remoteMediator = CharacterRemoteMediator(
-                characterUseCase,
-                pageInfoDataStore,
-                defaultDispatcher
+                characterUseCase, pageInfoDataStore, defaultDispatcher
             )
         ) { characterUseCase.getCharacters() }.flow.cachedIn(viewModelScope)
 

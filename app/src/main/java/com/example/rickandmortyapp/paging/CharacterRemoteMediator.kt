@@ -28,21 +28,9 @@ class CharacterRemoteMediator constructor(
 
         val pageInfo = pageInfoDataStore.getPageInfo().first()
 
-        val loadKey = when (loadType) {
-            LoadType.PREPEND -> { //Load data at the beginning of the currently loaded data set
-                pageInfo.previousPage
-            }
-            LoadType.APPEND -> { //Load data at the end of the currently loaded data set
-                pageInfo.nextPage
-            }
-            LoadType.REFRESH -> { // First time loading data
-                null
-            }
-        }
-
         return try {
 
-            val response = characterUseCase.getCharacterInfo(loadKey)
+            val response = characterUseCase.getCharacterInfo(pageInfo.nextPage)
 
             val responseNextPage = response.info.next?.numberFromUrl('=') ?: 1
             val responsePreviousPage = response.info.prev?.numberFromUrl('=') ?: 1
