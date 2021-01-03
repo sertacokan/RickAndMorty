@@ -11,13 +11,14 @@ import com.example.rickandmortyapp.R
 import com.example.rickandmortyapp.databinding.FragmentCharacterDetailBinding
 import com.example.rickandmortyapp.delegations.dataBinding
 import com.example.rickandmortyapp.viewmodels.CharacterDetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CharacterDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentCharacterDetailBinding
     private val viewModel: CharacterDetailViewModel by viewModels()
     private val detailArgs: CharacterDetailFragmentArgs by navArgs()
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCharacterDetailBinding.inflate(inflater, container, false)

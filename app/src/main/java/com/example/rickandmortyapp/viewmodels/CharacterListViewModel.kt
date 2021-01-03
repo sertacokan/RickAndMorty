@@ -7,11 +7,13 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
+import com.example.rickandmortyapp.database.CharacterEntity
 import com.example.rickandmortyapp.datastore.PageInfoDataStore
 import com.example.rickandmortyapp.di.DefaultDispatcher
 import com.example.rickandmortyapp.paging.CharacterRemoteMediator
 import com.example.rickandmortyapp.usecases.CharacterUseCase
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
 
 @ExperimentalPagingApi
 class CharacterListViewModel
@@ -30,5 +32,12 @@ class CharacterListViewModel
                 defaultDispatcher
             )
         ) { characterUseCase.getCharacters() }.flow.cachedIn(viewModelScope)
+
+
+    fun updateFavoriteState(isChecked: Boolean, characterEntity: CharacterEntity) {
+        viewModelScope.launch {
+            characterUseCase.updateFavoriteState(isChecked, characterEntity)
+        }
+    }
 
 }

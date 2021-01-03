@@ -74,6 +74,7 @@
             tools:srcCompat="@drawable/ic_alive" />
 
         <ToggleButton
+            app:checkListener="@{(isChecked) -> selectionListener.onCharacterFavoriteChanged(isChecked,characterEntity)}"
             android:id="@+id/bookmarkToggle"
             style="@style/FavoriteButtonStyle"
             android:layout_width="50dp"

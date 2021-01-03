@@ -18,7 +18,6 @@ import com.example.rickandmortyapp.listeners.CharacterSelectionListener
 import com.example.rickandmortyapp.viewmodels.CharacterListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalPagingApi
@@ -100,10 +99,10 @@ class CharacterListFragment : Fragment(), CharacterSelectionListener {
     }
 
     override fun onCharacterFavoriteChanged(isChecked: Boolean, characterEntity: CharacterEntity) {
-
+        viewModel.updateFavoriteState(isChecked, characterEntity)
     }
 
-//endregion
+    //endregion
 
     private fun getCharacters() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {

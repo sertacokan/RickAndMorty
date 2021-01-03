@@ -27,4 +27,12 @@ class CharacterUseCase @Inject constructor(private val characterRepository: Char
     suspend fun insertAll(characterEntities: List<CharacterEntity>) {
         characterRepository.insertAll(characterEntities)
     }
+
+    suspend fun updateFavoriteState(isChecked: Boolean, characterEntity: CharacterEntity) {
+        if (isChecked) {
+            characterRepository.addToFavorite(characterEntity)
+        } else {
+            characterRepository.removeFromFavorite(characterEntity)
+        }
+    }
 }

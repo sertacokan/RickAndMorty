@@ -51,6 +51,7 @@
             tools:text="Human" />
 
         <ToggleButton
+            checkListener="@{(isChecked) -> viewModel.updateFavoriteState(isChecked)}"
             android:checked="@{viewModel.isFavorite}"
             android:id="@+id/toggleButton"
             style="@style/FavoriteButtonStyle"

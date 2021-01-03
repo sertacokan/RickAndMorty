@@ -4,9 +4,14 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.example.rickandmortyapp.database.CharacterEntity
+import com.example.rickandmortyapp.repositories.CharacterRepository
+import kotlinx.coroutines.launch
 
-class CharacterDetailViewModel @ViewModelInject constructor() : ViewModel() {
+class CharacterDetailViewModel @ViewModelInject constructor(
+    private val characterRepository: CharacterRepository
+) : ViewModel() {
 
     val selectedCharacter = MutableLiveData<CharacterEntity>()
 
@@ -32,4 +37,21 @@ class CharacterDetailViewModel @ViewModelInject constructor() : ViewModel() {
 
     val isFavorite = selectedCharacter.map { it.isFavorite }
 
+
+    fun updateFavoriteState(isChecked: Boolean) {
+
+        viewModelScope.launch {
+
+            val characterEntity = selectedCharacter.value
+
+            characterEntity?.let { entity ->
+
+                if (isChecked) {
+                    characterRepository.addToFavorite(entity)
+                } else {
+                    characterRepository.removeFromFavorite(entity)
+                }
+            }
+        }
+    }
 }
