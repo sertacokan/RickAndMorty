@@ -106,7 +106,7 @@ class CharacterListFragment : Fragment(), CharacterSelectionListener {
 //endregion
 
     private fun getCharacters() {
-        viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.characters.collect { pagingData -> (binding.characterList.adapter as? CharacterPagingAdapter)?.submitData(pagingData) }
         }
     }
