@@ -8,29 +8,25 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.example.rickandmortyapp.database.CharacterEntity
-import com.example.rickandmortyapp.datastore.PageInfoDataStore
-import com.example.rickandmortyapp.di.DefaultDispatcher
 import com.example.rickandmortyapp.paging.CharacterRemoteMediator
 import com.example.rickandmortyapp.usecases.CharacterUseCase
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 @ExperimentalPagingApi
 class CharacterListViewModel
 @ViewModelInject constructor(
     private val characterUseCase: CharacterUseCase,
-    private val pageInfoDataStore: PageInfoDataStore,
-    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
+    private val pagingConfig: PagingConfig,
+    private val remoteMediator: CharacterRemoteMediator
 ) : ViewModel() {
 
     val characters =
         Pager(
-            config = PagingConfig(pageSize = 10),
-            remoteMediator = CharacterRemoteMediator(
-                characterUseCase, pageInfoDataStore, defaultDispatcher
-            )
-        ) { characterUseCase.getCharacters() }.flow.cachedIn(viewModelScope)
-
+            config = pagingConfig,
+            remoteMediator = remoteMediator
+        ) { characterUseCase.getCharacters() }
+            .flow
+            .cachedIn(viewModelScope)
 
     fun updateFavoriteState(isChecked: Boolean, characterEntity: CharacterEntity) {
         viewModelScope.launch {

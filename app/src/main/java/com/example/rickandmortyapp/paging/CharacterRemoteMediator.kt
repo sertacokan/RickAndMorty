@@ -6,6 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.example.rickandmortyapp.database.CharacterEntity
 import com.example.rickandmortyapp.datastore.PageInfoDataStore
+import com.example.rickandmortyapp.di.DefaultDispatcher
 import com.example.rickandmortyapp.extensions.numberFromUrl
 import com.example.rickandmortyapp.extensions.toCharacterEntity
 import com.example.rickandmortyapp.models.CharacterEpisodeModel
@@ -16,15 +17,19 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
 @ExperimentalPagingApi
-class CharacterRemoteMediator constructor(
+class CharacterRemoteMediator @Inject constructor(
     private val characterUseCase: CharacterUseCase,
     private val pageInfoDataStore: PageInfoDataStore,
-    private val dispatcher: CoroutineDispatcher
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) : RemoteMediator<Int, CharacterEntity>() {
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, CharacterEntity>): MediatorResult {
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, CharacterEntity>
+    ): MediatorResult {
 
         val pageInfo = pageInfoDataStore.getPageInfo().first()
 
@@ -60,7 +65,7 @@ class CharacterRemoteMediator constructor(
     }
 
     private suspend fun convertToEntities(response: CharacterResponseModel): List<CharacterEntity> {
-        return withContext(dispatcher) {
+        return withContext(defaultDispatcher) {
 
             val characterEpisodeModels = response.results.map { character ->
                 val episodeId = character.episode.lastOrNull()?.numberFromUrl()
