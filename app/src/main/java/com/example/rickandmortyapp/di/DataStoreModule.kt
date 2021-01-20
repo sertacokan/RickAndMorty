@@ -1,7 +1,7 @@
 package com.example.rickandmortyapp.di
 
 import android.content.Context
-import androidx.datastore.DataStore
+import androidx.datastore.core.DataStore
 import androidx.datastore.createDataStore
 import com.example.rickandmortyapp.ResponsePageInfo
 import com.example.rickandmortyapp.protobuf.PageInfoSerializer
@@ -11,7 +11,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
-
 
 @InstallIn(ApplicationComponent::class)
 @Module

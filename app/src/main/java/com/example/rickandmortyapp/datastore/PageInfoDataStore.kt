@@ -1,6 +1,6 @@
 package com.example.rickandmortyapp.datastore
 
-import androidx.datastore.DataStore
+import androidx.datastore.core.DataStore
 import com.example.rickandmortyapp.ResponsePageInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

@@ -11,26 +11,27 @@ import com.example.rickandmortyapp.models.CharacterResponseModel
 import com.example.rickandmortyapp.models.EpisodeResponseModel
 import com.example.rickandmortyapp.repositories.CharacterRepository
 import com.example.rickandmortyapp.repositories.EpisodeRepository
+import com.example.rickandmortyapp.repositories.EpisodeRepositoryImpl
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class CharacterUseCase @Inject constructor(
-    private val characterRepository: CharacterRepository,
-    private val episodeRepository: EpisodeRepository,
+    private val characterRepositoryImpl: CharacterRepository,
+    private val episodeRepositoryImpl: EpisodeRepository,
     private val pageInfoDataStore: PageInfoDataStore
 ) {
 
     fun getCharacters(): PagingSource<Int, CharacterEntity> {
-        return characterRepository.getCharacters()
+        return characterRepositoryImpl.getCharacters()
     }
 
     fun getFilteredCharacters(status: String): PagingSource<Int, CharacterEntity> {
-        return characterRepository.filterCharacterByStatus(status)
+        return characterRepositoryImpl.filterCharacterByStatus(status)
     }
 
     suspend fun getCharacterInfo(pageInfo: ResponsePageInfo): CharacterResponseModel {
-        return characterRepository.getCharacterList(pageInfo.nextPage)
+        return characterRepositoryImpl.getCharacterList(pageInfo.nextPage)
     }
 
     suspend fun updateDataSources(characterResponse: CharacterResponseModel) {
@@ -68,18 +69,18 @@ class CharacterUseCase @Inject constructor(
     }
 
     private suspend fun getEpisodeInfo(episodeId: Int?): EpisodeResponseModel {
-        return episodeRepository.getCharacterLastEpisode(episodeId)
+        return episodeRepositoryImpl.getCharacterLastEpisode(episodeId)
     }
 
     private suspend fun insertAll(characterEntities: List<CharacterEntity>) {
-        characterRepository.insertAll(characterEntities)
+        characterRepositoryImpl.insertAll(characterEntities)
     }
 
     suspend fun updateFavoriteState(isChecked: Boolean, characterEntity: CharacterEntity) {
         if (isChecked) {
-            characterRepository.addToFavorite(characterEntity)
+            characterRepositoryImpl.addToFavorite(characterEntity)
         } else {
-            characterRepository.removeFromFavorite(characterEntity)
+            characterRepositoryImpl.removeFromFavorite(characterEntity)
         }
     }
 }

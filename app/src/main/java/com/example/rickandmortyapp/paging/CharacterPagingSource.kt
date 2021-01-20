@@ -2,17 +2,16 @@ package com.example.rickandmortyapp.paging
 
 import androidx.paging.PagingSource
 import com.example.rickandmortyapp.models.CharacterResultModel
-import com.example.rickandmortyapp.network.CharactersService
-import com.example.rickandmortyapp.repositories.CharacterRepository
+import com.example.rickandmortyapp.repositories.CharacterRepositoryImpl
 import javax.inject.Inject
 
-class CharacterPagingSource @Inject constructor(private val characterRepository: CharacterRepository) : PagingSource<Int, CharacterResultModel>() {
+class CharacterPagingSource @Inject constructor(private val characterRepositoryImpl: CharacterRepositoryImpl) : PagingSource<Int, CharacterResultModel>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharacterResultModel> {
 
         val key = params.key ?: 1
 
-        val response = characterRepository.getCharacterList(key)
+        val response = characterRepositoryImpl.getCharacterList(key)
 
         val previous = response.info.prev
         val next = response.info.next
