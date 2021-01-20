@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.rickandmortyapp.database.CharacterEntity
-import com.example.rickandmortyapp.repositories.CharacterRepositoryImpl
+import com.example.rickandmortyapp.repositories.CharacterRepository
 import kotlinx.coroutines.launch
 
 class CharacterDetailViewModel @ViewModelInject constructor(
-    private val characterRepositoryImpl: CharacterRepositoryImpl
+    private val characterRepository: CharacterRepository
 ) : ViewModel() {
 
     val selectedCharacter = MutableLiveData<CharacterEntity>()
@@ -47,9 +47,9 @@ class CharacterDetailViewModel @ViewModelInject constructor(
             characterEntity?.let { entity ->
 
                 if (isChecked) {
-                    characterRepositoryImpl.addToFavorite(entity)
+                    characterRepository.addToFavorite(entity)
                 } else {
-                    characterRepositoryImpl.removeFromFavorite(entity)
+                    characterRepository.removeFromFavorite(entity)
                 }
             }
         }
