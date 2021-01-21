@@ -21,7 +21,7 @@ class CoroutineTestRule : TestRule {
                     base?.evaluate()
                 } finally {
                     Dispatchers.resetMain()
-                    testDispatcher.cleanupTestCoroutines()
+                    testCoroutineScope.cleanupTestCoroutines()
                 }
             }
         }
