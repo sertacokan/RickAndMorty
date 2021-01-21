@@ -2,9 +2,7 @@ package com.example.rickandmortyapp
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.test.*
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
@@ -12,24 +10,25 @@ import org.junit.runners.model.Statement
 @ExperimentalCoroutinesApi
 class CoroutineTestRule : TestRule {
 
+    private val testDispatcher = TestCoroutineDispatcher()
+    private val testCoroutineScope = TestCoroutineScope(testDispatcher)
+
     override fun apply(base: Statement?, description: Description?): Statement {
-        return CoroutineRuleStatement(base)
-    }
-
-    inner class CoroutineRuleStatement(private val base: Statement?) : Statement() {
-
-        private val testDispatcher = TestCoroutineDispatcher()
-
-        @Throws(Throwable::class)
-        override fun evaluate() {
-            Dispatchers.setMain(testDispatcher)
-            try {
-                base?.evaluate()
-            } finally {
-                Dispatchers.resetMain()
-                testDispatcher.cleanupTestCoroutines()
+        return object : Statement() {
+            override fun evaluate() {
+                Dispatchers.setMain(testDispatcher)
+                try {
+                    base?.evaluate()
+                } finally {
+                    Dispatchers.resetMain()
+                    testDispatcher.cleanupTestCoroutines()
+                }
             }
         }
+    }
+
+    fun runBlockingTest(block: suspend TestCoroutineScope.() -> Unit) {
+        testCoroutineScope.runBlockingTest { block() }
     }
 }
 

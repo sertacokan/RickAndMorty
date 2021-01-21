@@ -5,18 +5,12 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.rickandmortyapp.database.CharacterDatabase
 import com.example.rickandmortyapp.database.CharacterEntity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 class CharacterDatabaseTest {
@@ -40,7 +34,7 @@ class CharacterDatabaseTest {
      * Test character entity is favorite
      */
     @Test
-    fun test_updateCharacter() = runBlockingTest {
+    fun test_updateCharacter() = coroutineTestRule.runBlockingTest {
 
         val testCharacter = CharacterEntity(
             1, "Body Guard Morty", "Dead", "Human", "Male", "", "unknown",
@@ -57,7 +51,7 @@ class CharacterDatabaseTest {
      * Test character entity is not favorite
      */
     @Test
-    fun test_isNotFavorite() = runBlockingTest {
+    fun test_isNotFavorite() = coroutineTestRule.runBlockingTest {
 
         val testCharacter = CharacterEntity(
             1, "Body Guard Morty", "Dead", "Human", "Male", "", "unknown",
@@ -73,7 +67,7 @@ class CharacterDatabaseTest {
      * Test all response items inserted
      */
     @Test
-    fun test_itemAllInserted() = runBlockingTest {
+    fun test_itemAllInserted() = coroutineTestRule.runBlockingTest {
 
         val characters = listOf(
             CharacterEntity(
