@@ -13,6 +13,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -20,13 +21,13 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class CharacterDatabaseTest {
 
-    private val testDispatcher = TestCoroutineDispatcher()
+    @get:Rule
+    val coroutineTestRule = CoroutineTestRule()
 
     private lateinit var database: CharacterDatabase
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(testDispatcher)
         val context = ApplicationProvider.getApplicationContext<RickMortyApplication>()
         database = Room.inMemoryDatabaseBuilder(context, CharacterDatabase::class.java)
             .allowMainThreadQueries()
@@ -90,8 +91,6 @@ class CharacterDatabaseTest {
 
     @After
     fun tearDown() {
-        Dispatchers.resetMain()
-        testDispatcher.cleanupTestCoroutines()
         database.close()
     }
 }
